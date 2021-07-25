@@ -1,0 +1,26 @@
+{
+    "name": "taro/chant-cli",
+    "description": "Php micro console framework",
+    "type": "library",
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "tekku-taro",
+            "email": "tekku.taro@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Taro\\App\\":"./app/",
+            "Taro\\Libs\\":"./libs/",
+            "Taro\\Tests\\":"./tests/"
+        }
+    },
+    "require": {
+        "vlucas/phpdotenv": "^5.3",
+        "monolog/monolog": "^2.3"
+    }
+}
