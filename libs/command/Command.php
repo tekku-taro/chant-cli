@@ -34,40 +34,45 @@ abstract class Command
 
     public function tearDown(){}
 
+    public function prompt()
+    {
+        $this->output->print('>>');
+    }
+
     public function text($text)
     {
-        $this->output->print($text);
+        $this->output->printLine($text);
     }
 
     public function textDanger($text)
     {
-        $this->output->printWithColor($text, ColorScheme::$foregroundColors['red']);
+        $this->output->printWithColor($text, 'red');
     }
 
     public function textWarning($text)
     {
-        $this->output->printWithColor($text, ColorScheme::$foregroundColors['yellow']);
+        $this->output->printWithColor($text, 'yellow');
     }
 
     public function textInfo($text)
     {
-        $this->output->printWithColor($text, ColorScheme::$foregroundColors['green']);
+        $this->output->printWithColor($text, 'green');
     }
 
     public function success($text)
     {
-        $this->output->printWithBackgroundColor($text, ColorScheme::$backgroundColors['green']);
+        $this->output->printWithBackgroundColor($text, 'green');
     }
 
     public function error($text)
     {
-        $this->output->printWithBackgroundColor($text, ColorScheme::$backgroundColors['red']);
+        $this->output->printWithBackgroundColor($text, 'red');
     }
 
     public function question($text)
     {
         $this->text($text);
-
+        $this->prompt();
         return trim(fgets($this->stream->getStdin()));
     }
 
@@ -82,9 +87,11 @@ abstract class Command
         return false;
     }
 
-    public function table($headers, $body)
+    public function table($headers, $body, $colorText = null)
     {
-        $this->output->printTable($headers, $body);
+        $this->output->printTable($headers, $body, $colorText);
     }
+
+
 
 }

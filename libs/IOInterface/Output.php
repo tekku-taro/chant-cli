@@ -19,31 +19,36 @@ class Output
         fwrite($this->stream->getStdout(), $text);
     }
 
-    public function print($text)
+    public function printLine($text)
     {
         $this->stdout($text . PHP_EOL);
     }
 
-    public function printWithColor($text, $colorCode)
+    public function print($text)
     {
-        $this->stdout(ColorScheme::encodeText($text, $colorCode) . PHP_EOL);
+        $this->stdout($text);
     }
 
-    public function printWithBackgroundColor($text, $colorCode)
+    public function printWithColor($text, $colorText)
     {
-        $this->stdout(ColorScheme::encodeText($text, null, $colorCode) . PHP_EOL);
+        $this->stdout(ColorScheme::encodeText($text, $colorText) . PHP_EOL);
     }
 
-    private function createTable(array $headers,array $data):Table
+    public function printWithBackgroundColor($text, $colorText)
     {
-        $table = new Table($headers, $data);
+        $this->stdout(ColorScheme::encodeText($text, null, $colorText) . PHP_EOL);
+    }
+
+    private function createTable(array $headers,array $data, $colorText = null):Table
+    {
+        $table = new Table($headers, $data, $colorText);
 
         return $table;
     }
 
-    public function printTable(array $headers,array $data)
+    public function printTable(array $headers,array $data, $colorText = null)
     {
-        $table = $this->createTable($headers, $data);
+        $table = $this->createTable($headers, $data, $colorText);
         $strTable = $table->toString();
 
         $this->print($strTable);

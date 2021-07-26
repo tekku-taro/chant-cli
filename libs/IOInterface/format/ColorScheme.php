@@ -31,22 +31,51 @@ class ColorScheme
         'reverse video'=>'7',
     ];
 
+    private static function getColorTextCode($colorText)
+    {
+        if(isset(ColorScheme::$foregroundColors[$colorText])) {
+            return ColorScheme::$foregroundColors[$colorText];
+        }
+        return null;
+    }
+
+    private static function getColorBgCode($colorBgText)
+    {
+        if(isset(ColorScheme::$backgroundColors[$colorBgText])) {
+            return ColorScheme::$backgroundColors[$colorBgText];
+        }
+        return null;
+    }
+
+    private static function getStyleCode($styleText)
+    {
+        if(isset(ColorScheme::$styles[$styleText])) {
+            return ColorScheme::$styles[$styleText];
+        }
+        return null;
+    }
+
 
     public static function encodeText($text, $foreground = null, $background = null, $style = null):string
     {
         $codes = [];
         if($foreground !== null) {
-            $codes[] = $foreground;
+            $codes[] = self::getColorTextCode($foreground);
         }
         if($background !== null) {
-            $codes[] = $background;
+            $codes[] = self::getColorBgCode($background);
         }
         if($style !== null) {
-            $codes[] = $style;
+            $codes[] = self::getStyleCode($style);
         }
+
+        $codes = array_filter($codes, function($code) {
+            return $code !== null;
+        });
+
         if(!empty($codes)) {
             $escapeCodes = implode(';', $codes);
-            return "\033[${escapeCodes}m ${text} \033[0m";
+            return "\033[${escapeCodes}m${text}\033[0m";
         }
 
         return $text;
