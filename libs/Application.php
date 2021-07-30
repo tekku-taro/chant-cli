@@ -33,7 +33,7 @@ class Application
         $this->commandRegistry->register($commandName, $command);
     }
 
-    private function findCommand():Command
+    public function findCommand():Command
     {
         return $this->commandRegistry->getCommand($this->input);
     }

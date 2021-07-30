@@ -1,7 +1,6 @@
 <?php
 namespace Taro\Libs\Command;
 
-use Taro\Libs\IOInterface\Format\ColorScheme;
 use Taro\Libs\IOInterface\Input;
 use Taro\Libs\IOInterface\IOStream;
 use Taro\Libs\IOInterface\Output;
@@ -15,9 +14,11 @@ abstract class Command
 
     public $flags = [];
 
+    public $description = '';
+
     protected $stream;
 
-    protected $input;
+    public $input;
 
     protected $output;
 
@@ -33,6 +34,21 @@ abstract class Command
     abstract public function handle();
 
     public function tearDown(){}
+
+    public function flag($flagName)
+    {
+        return $this->input->hasFlag($flagName);
+    }
+
+    public function parameter($paramName)
+    {
+        return $this->input->param($paramName);
+    }
+
+    public function argument($argName)
+    {
+        return $this->input->getOption($argName);
+    }
 
     public function prompt()
     {

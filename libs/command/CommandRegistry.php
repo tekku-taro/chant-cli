@@ -81,7 +81,7 @@ class CommandRegistry
             // コマンドのみパターンが、INPUTシグネチャに含まれるか
             if(preg_match($pattern, $input->command, $matches)) {
                 foreach ($matches as $key => $match) {
-                    if(is_string($key)) {
+                    if(is_string($key) && $match !== '') {
                         $input->options[$key] = $match;
                     }
                 }
