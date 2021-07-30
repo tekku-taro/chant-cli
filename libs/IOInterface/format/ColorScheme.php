@@ -77,8 +77,7 @@ class ColorScheme
             $escapeCodes = implode(';', $codes);
             return "\033[${escapeCodes}m${text}\033[0m";
         }
-
-        return $text;
+        return $text ?? '';
     }
 
 }

@@ -11,6 +11,7 @@ class SigParser
         $signature = new Signature();
 
         $signature->original = trim($commandObj->signature);
+        $signature->description = $commandObj->description;
         $signature->params = $commandObj->params;
         $signature->flags = $commandObj->flags;   
         $signature->commandObj = $commandObj;   

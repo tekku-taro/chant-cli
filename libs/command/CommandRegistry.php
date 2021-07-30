@@ -11,7 +11,7 @@ use Taro\Libs\Signature\SigParser;
 
 class CommandRegistry
 {
-    public $signatureMap = [];
+    private $signatureMap = [];
 
     private $commandListClass;
 
@@ -49,6 +49,11 @@ class CommandRegistry
                 $this->signatureMap[$signature->command] = $signature;
             }
         }
+    }
+
+    public function getCommandList()
+    {
+        return $this->signatureMap;
     }
 
     private function makeSignature(Command $commandObj):Signature

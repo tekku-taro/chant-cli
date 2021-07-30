@@ -11,6 +11,8 @@ class TestCommand extends Command
 
     public $flags = ['f','s','x'];
 
+    public $description = 'command class for test';
+
     public function handle()
     {
         $this->output->printLine('this is the Test Command.');

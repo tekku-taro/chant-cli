@@ -2,3 +2,5 @@
 .env.testing
 /vendor
 /app/bootstrap/cache
+.vscode
+.phpunit.result.cache

@@ -12,12 +12,19 @@ class Application
     public $stream;
     public $input;
     public $commandRegistry;
+    public static $instance;
 
     public function __construct(IOStream $stream, array $args)
     {
         $this->stream = $stream;
         $this->input = new Input($args);
         $this->commandRegistry = new CommandRegistry($stream, $this->input);
+        self::$instance = $this;
+    }
+
+    public static function getInstance()
+    {
+        return self::$instance;
     }
 
     public function run()
@@ -49,7 +56,7 @@ class Application
 
     private function terminate()
     {
-        print 'app terminated!';
+        // print 'app terminated!';
     }
 
 }
