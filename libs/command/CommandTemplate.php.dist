@@ -1,0 +1,23 @@
+<?php
+namespace Taro\App\Console\Commands;
+
+use Taro\Libs\Command\Command;
+
+class [[commandName]] extends Command
+{
+    public $signature = 'command:[[command]]';
+
+    public $params = [];
+
+    public $flags = [];
+
+    public $description = '[[commandName]] Class';
+
+    public function handle()
+    {
+        // Here is where you write any script executed by this command
+        $this->textInfo('[[command]] command (' . $this->signature . ')');
+
+
+    }
+}

@@ -3,6 +3,8 @@ namespace Taro\App\Console;
 
 use Taro\App\Console\Commands\HelpCommand;
 use Taro\App\Console\Commands\ListRegisteredCommands;
+use Taro\App\Console\Commands\MakeCommand;
+use Taro\App\Console\Commands\SampleCommand;
 use Taro\App\Console\Commands\TestCommand;
 
 class CommandList
@@ -13,5 +15,6 @@ class CommandList
         TestCommand::class,
         ListRegisteredCommands::class,
         HelpCommand::class,
+        MakeCommand::class,
     ];
 }
