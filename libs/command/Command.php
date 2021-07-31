@@ -53,6 +53,7 @@ abstract class Command
     public function prompt()
     {
         $this->output->print('>>');
+        return trim(fgets($this->stream->getStdin()));
     }
 
     public function text($text)
@@ -88,8 +89,7 @@ abstract class Command
     public function question($text)
     {
         $this->text($text);
-        $this->prompt();
-        return trim(fgets($this->stream->getStdin()));
+        return $this->prompt();
     }
 
     public function confirm($text)

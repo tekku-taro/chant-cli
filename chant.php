@@ -12,7 +12,6 @@ $stream = new IOStream;
 $app = new Application($stream, $argv);
 
 $app->registerCommand('somecommand', function(CallbackCommand $command){
-    // print 'this is manually registered command' . PHP_EOL;
     $command->textInfo('this is manually registered command');
 });
 

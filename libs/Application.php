@@ -1,6 +1,8 @@
 <?php
 namespace Taro\Libs;
 
+define('DS', DIRECTORY_SEPARATOR);
+
 use Taro\Libs\Command\CallbackCommand;
 use Taro\Libs\Command\Command;
 use Taro\Libs\Command\CommandRegistry;
@@ -56,7 +58,6 @@ class Application
 
     private function terminate()
     {
-        // print 'app terminated!';
     }
 
 }

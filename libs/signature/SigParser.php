@@ -47,7 +47,7 @@ class SigParser
         $options = [];
         $count = 0;
         foreach ($parts as $part) {
-            if(preg_match('/\[([a-zA-Z0-9-?]+)\]/', $part, $matches)) {
+            if(preg_match('/\[([a-zA-Z0-9-?_]+)\]/', $part, $matches)) {
                 $options[] = $matches[1];
                 if(strpos($matches[1],'?') !== (strlen($matches[1]) -1)) {
                     $count += 1;
@@ -67,10 +67,10 @@ class SigParser
     {
 
         // Convert argument e.g. [arg1]
-        $commandText = preg_replace('/\[([a-zA-Z0-9]+)\]/', '(?P<\1>[a-zA-Z0-9-]+)',$commandText);
+        $commandText = preg_replace('/\[([a-zA-Z0-9_]+)\]/', '(?P<\1>[a-zA-Z0-9-_]+)',$commandText);
 
         // Convert optional argument e.g. [arg1?]
-        $commandText = preg_replace('/\[([a-zA-Z0-9]+)\?\]/', '(?P<\1>[a-zA-Z0-9-]*)',$commandText);
+        $commandText = preg_replace('/\[([a-zA-Z0-9_]+)\?\]/', '(?P<\1>[a-zA-Z0-9-_]*)',$commandText);
 
         // Convert whitespace e.g. ' '
         $commandText = preg_replace('/[ 　]+/', '[\s]*',$commandText);

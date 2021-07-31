@@ -75,7 +75,7 @@ class CommandRegistry
             return $signature->commandObj;
         }
 
-        throw new CommandNotFoundException('コマンドが見つかりません。');
+        throw new CommandNotFoundException();
     }
 
     private function matchSignature(Input $input)
