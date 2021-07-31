@@ -85,7 +85,7 @@ src
 
    
 
-3. CommandList クラスに新規クラスを追加
+3. Taro\App\Console\CommandList クラスに新規クラスを追加
 
    ```php
    use Taro\App\Console\Commands\SampleCommand; <= 追加
@@ -113,7 +113,32 @@ src
    ./chant command:sample_command
    ```
 
-   
+
+
+
+## ターミナルでのコマンド実行方法
+
+windows環境など、shebang を使わない場合は、phpコマンドで、 chant.php ファイルを実行する
+
+```php
+# bash を使わない場合は php コマンドで実行
+php chant.php 実行するコマンド
+```
+
+shebang を使い、直接実行する
+
+```bash
+# chant ファイルの先頭の shebang を実行環境に合わせて変更
+#!/usr/bin/php
+
+# ファイル権限の変更
+chmod +x ./chant
+
+# chant ファイルを直接実行
+./chant  実行するコマンド
+```
+
+
 
 ### コマンドシグネチャ
 
@@ -232,6 +257,15 @@ public function handle()
     );	
 }
 ```
+
+## 登録済みコマンド
+
+| コマンド名    | シグネチャ                        | 説明                                               |
+| ------------- | --------------------------------- | -------------------------------------------------- |
+| Test コマンド | command:test [option1] [option2?] | コマンド各種テスト用                               |
+| Help コマンド | command:help                      | Cli のヘルプを表示                                 |
+| List コマンド | command:list                      | 登録済みコマンドのリストを表示                     |
+| Make コマンド | command:make ***コマンド名***     | クラス名が**コマンド名**のコマンドクラス雛形を作成 |
 
 
 
