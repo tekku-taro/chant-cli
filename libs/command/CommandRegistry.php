@@ -3,6 +3,7 @@ namespace Taro\Libs\Command;
 
 use ErrorException;
 use Taro\App\Bootstrap\Config;
+use Taro\Libs\Exceptions\CommandArgumentMissingException;
 use Taro\Libs\Exceptions\CommandNotFoundException;
 use Taro\Libs\IOInterface\Input;
 use Taro\Libs\IOInterface\IOStream;
@@ -81,21 +82,29 @@ class CommandRegistry
     private function matchSignature(Input $input)
     {
         $matchedSignature = null;
+        $commandFound = false;
         // パターンリストを一つずつ、INPUTとSignatureで比較する
-        foreach ($this->signatureMap as $pattern => $signature) {
-            // コマンドのみパターンが、INPUTシグネチャに含まれるか
-            if(preg_match($pattern, $input->command, $matches)) {
-                foreach ($matches as $key => $match) {
-                    if(is_string($key) && $match !== '') {
-                        $input->options[$key] = $match;
+        /** @var Signature $signature */
+        foreach ($this->signatureMap as $command => $signature) {
+            if($signature->command === $input->command) {
+                $commandFound = true;
+                // コマンドのみパターンが、INPUTシグネチャに含まれるか
+                if(preg_match($signature->commandPattern, $input->commandwithOptions, $matches)) {
+                    foreach ($matches as $key => $match) {
+                        if(is_string($key) && $match !== '') {
+                            $input->options[$key] = $match;
+                        }
                     }
+                    $matchedSignature = $signature;
                 }
-                $matchedSignature = $signature;
                 break;
             }
         }
 
         if($matchedSignature === null) {
+            if($commandFound) {
+                throw new CommandArgumentMissingException($signature);
+            }
             return false;
         }
 

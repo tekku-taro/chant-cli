@@ -7,8 +7,10 @@ class Signature
 {
     public $original;
     public $command;
+    public $commandPattern;
     public $description;
     public $options = [];
+    public $requiredOptions = [];
     public $params = [];
     public $flags = [];
     public $commandArgCount = 0;

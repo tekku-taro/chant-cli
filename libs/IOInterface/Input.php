@@ -6,6 +6,7 @@ class Input
     public $argv;
     public $original;
     public $command;
+    public $commandwithOptions;
     public $options = [];
     public $params = [];
     public $flags = [];
@@ -87,6 +88,7 @@ class Input
                 $commands[] = $part;
             }
         }
-        $this->command = implode(' ', $commands);
+        $this->commandwithOptions = implode(' ', $commands);
+        $this->command = $commands[0];
     }
 }

@@ -23,44 +23,62 @@ class SigParser
 
     public function parseCallback($commandText, Command $callbackCommand):Signature
     {
+        ['command' => $command, 'options' => $options, 'requiredOptions' => $requiredOptions, 'count' => $count] = $this->getCommandOptionsAndArgCount($commandText);
+
         $pattern = $this->createSignaturePattern($commandText);
 
         $signature = new Signature();
 
         $signature->original = $commandText;  
         $signature->commandObj = $callbackCommand;
-        $signature->command = $pattern;   
-        
+        $signature->commandPattern = $pattern;   
+        $signature->command = $command;
+        $signature->options = $options;
+        $signature->requiredOptions = $requiredOptions;
+        $signature->commandArgCount = $count;
+
         return $signature;
     }
 
 
     private function addSignaturePattern(Signature $signature)
     {
-        $command = $signature->original;
+        $commandText = $signature->original;
 
-        $parts = explode(' ', $command);
+        ['command' => $command, 'options' => $options, 'requiredOptions' => $requiredOptions, 'count' => $count] = $this->getCommandOptionsAndArgCount($commandText);
+
+
+        $signature->commandPattern = $this->createSignaturePattern($commandText);
+        $signature->command = $command;
+        $signature->options = $options;
+        $signature->requiredOptions = $requiredOptions;
+        $signature->commandArgCount = $count;         
+    }
+
+    private function getCommandOptionsAndArgCount($commandText)
+    {
+        $parts = explode(' ', $commandText);
 
         $parts = array_filter($parts, function($part){
             return !empty($part);            
         });
         $options = [];
+        $requiredOptions = [];
+        $command = '';
         $count = 0;
         foreach ($parts as $part) {
             if(preg_match('/\[([a-zA-Z0-9-?_]+)\]/', $part, $matches)) {
                 $options[] = $matches[1];
                 if(strpos($matches[1],'?') !== (strlen($matches[1]) -1)) {
+                    $requiredOptions[] = $matches[1];
                     $count += 1;
                 }
             } else {
+                $command .= $part;
                 $count += 1;
             }
         }
-
-
-        $signature->command = $this->createSignaturePattern($command);
-        $signature->options = $options;
-        $signature->commandArgCount = $count;         
+        return ['command' => $command, 'options' => $options ,'requiredOptions' => $requiredOptions, 'count' => $count];
     }
 
     private function createSignaturePattern($commandText)
