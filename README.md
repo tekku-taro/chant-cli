@@ -40,7 +40,7 @@ src
 
 ## 基本的な使い方
 
-1. コマンド作成のための以下のコマンドをターミナル上で実行
+1. コマンド作成のための以下のコマンドをターミナル（bash）上で実行
 
    ```bash
    # ./chant command:make [コマンド名]
@@ -110,7 +110,7 @@ src
 4. 新規に作成したコマンドをターミナル上で実行
 
    ```bash
-   ./chant command:sample_command
+   ./chant command:sample_command something
    ```
 
 
