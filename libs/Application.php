@@ -17,16 +17,18 @@ class Application
     public $commandRegistry;
     public static $instance;
 
-    public function __construct(IOStream $stream, array $args)
+    public function __construct(IOStream $stream, array $args, $rootToFilePath = null)
     {
         $this->stream = $stream;
         $this->input = new Input($args);
+        $this->commandRegistry = new CommandRegistry($this->stream, $this->input);
         self::$instance = $this;
     }
 
     public function loadConfigData($rootToFilePath)
     {
         Config::overwriteData($rootToFilePath);
+        $this->commandRegistry = new CommandRegistry($this->stream, $this->input);
     }
 
     public static function getInstance()
@@ -36,7 +38,6 @@ class Application
 
     public function run()
     {
-        $this->commandRegistry = new CommandRegistry($this->stream, $this->input);
         $this->executeCommand();
         $this->terminate();
     }
