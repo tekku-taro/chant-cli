@@ -11,8 +11,8 @@ $stream = new IOStream;
 
 $app = new Application($stream, $argv);
 
-$app->registerCommand('somecommand', function(CallbackCommand $command){
-    $command->textInfo('this is manually registered command');
-});
+// $app->registerCommand('somecommand', function(CallbackCommand $command){
+//     $command->textInfo('this is manually registered command');
+// });
 
 $app->run();
