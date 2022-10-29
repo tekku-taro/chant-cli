@@ -82,7 +82,7 @@ class CommandRegistry
             return $signature->commandObj;
         }
 
-        throw new CommandNotFoundException();
+        throw new CommandNotFoundException(Config::getLast('commandlist_class'));
     }
 
     private function matchSignature(Input $input)
