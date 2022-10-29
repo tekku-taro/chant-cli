@@ -26,6 +26,7 @@ class MakeCommand extends Command
         $classData = $this->makeCommandFromTemplate($template, [
             'commandName'=>$commandName,
             'command'=>$command,
+            'namespace'=>Config::makeCommandClassNamespace(),
         ]);
 
         $filePath = FileHandler::appCommandsDirectry() . DS . $commandName . '.php';

@@ -1,5 +1,5 @@
 <?php
-namespace Taro\App\Console\Commands;
+namespace [[namespace]];
 
 use Taro\Libs\Command\Command;
 

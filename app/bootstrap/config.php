@@ -1,6 +1,7 @@
 <?php
 namespace Taro\App\Bootstrap;
 
+use ReflectionClass;
 use Taro\Libs\Utility\FileHandler;
 
 class Config
@@ -13,6 +14,13 @@ class Config
             'commandlist_class' => \Taro\Tests\Console\CommandList::class
         ],
     ];
+
+    public static function makeCommandClassNamespace()
+    {
+        $commandListClass = self::getLast('commandlist_class');
+        $reflector = new ReflectionClass($commandListClass);
+        return $reflector->getNamespaceName() . '\Commands';        
+    }
 
     public static function overwriteData(string $rootToFilePath):void
     {
