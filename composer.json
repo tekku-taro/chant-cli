@@ -16,6 +16,7 @@
         "psr-4": {
             "Taro\\App\\":"./app/",
             "Taro\\Libs\\":"./libs/",
+            "Taro\\Config\\":"./config/",
             "Taro\\Tests\\":"./tests/"
         }
     },
