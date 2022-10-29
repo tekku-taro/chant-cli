@@ -3,6 +3,7 @@ namespace Taro\Libs;
 
 define('DS', DIRECTORY_SEPARATOR);
 
+use Taro\App\Bootstrap\Config;
 use Taro\Libs\Command\CallbackCommand;
 use Taro\Libs\Command\Command;
 use Taro\Libs\Command\CommandRegistry;
@@ -22,6 +23,11 @@ class Application
         $this->input = new Input($args);
         $this->commandRegistry = new CommandRegistry($stream, $this->input);
         self::$instance = $this;
+    }
+
+    public function loadConfigData($rootToFilePath)
+    {
+        Config::overwriteData($rootToFilePath);
     }
 
     public static function getInstance()

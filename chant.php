@@ -14,5 +14,5 @@ $app = new Application($stream, $argv);
 // $app->registerCommand('somecommand', function(CallbackCommand $command){
 //     $command->textInfo('this is manually registered command');
 // });
-
+$app->loadConfigData(DS . 'config' . DS .'console.php');
 $app->run();

@@ -1,6 +1,7 @@
 <?php
 namespace Taro\App\Console\Commands;
 
+use Taro\App\Bootstrap\Config;
 use Taro\Libs\Command\Command;
 use Taro\Libs\Utility\FileHandler;
 
@@ -27,12 +28,12 @@ class MakeCommand extends Command
             'command'=>$command,
         ]);
 
-        $filePath = FileHandler::$commandsDir . DS . $commandName . '.php';
+        $filePath = FileHandler::commandsDirectry() . DS . $commandName . '.php';
 
         FileHandler::saveAs($filePath, $classData);
 
         $this->textInfo($commandName . ' class created at ' . $filePath);
-        $this->textWarning('Taro\App\Console\CommandList::$commandsに作成したクラス名を追加して下さい。');
+        $this->textWarning(Config::get('commandlist_namespace') . '::$commandsに作成したクラス名を追加して下さい。');
     }
 
     private function makeCommandFromTemplate($template, $vars)

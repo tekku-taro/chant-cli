@@ -10,4 +10,5 @@ $stream = new IOStream;
 
 $app = new Application($stream, $argv);
 
+$app->loadConfigData(DS . 'config' . DS .'console.php');
 $app->run();

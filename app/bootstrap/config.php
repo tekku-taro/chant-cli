@@ -1,7 +1,7 @@
 <?php
 namespace Taro\App\Bootstrap;
 
-use Exception;
+use Taro\Libs\Utility\FileHandler;
 
 class Config
 {
@@ -14,6 +14,34 @@ class Config
         ],
     ];
 
+    public static function overwriteData(string $rootToFilePath):void
+    {
+        $configPath = FileHandler::configPath($rootToFilePath);
+        if($configPath === null) {
+            return;
+        }
+        $updateData = include($configPath);
+        self::$data = array_merge_recursive(self::$data, $updateData); 
+        array_walk(self::$data, function(&$v) {
+            if(is_array($v)) {
+                $v = array_map(function($item) {
+                    if (is_array($item)) {
+                        $filtered = array_unique($item);
+                        if(count($filtered) === 1) {
+                            return $filtered[0];
+                        }
+                        return $filtered;
+                    }
+                    return $item;
+                }, $v);
+            }
+        });
+    }
+
+    /**
+     * @param string $key
+     * @return mixed|null
+     */
     public static function get($key)
     {
         $env = getenv('APP_ENV');
@@ -35,7 +63,7 @@ class Config
         $key = array_shift($keys);
 
         if(!isset($data[$key])) {
-            throw new Exception();
+            return null;
         }
 
         return self::find($data[$key], $keys);

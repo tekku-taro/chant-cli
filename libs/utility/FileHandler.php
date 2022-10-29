@@ -1,13 +1,12 @@
 <?php
 namespace Taro\Libs\Utility;
 
+use Taro\App\Bootstrap\Config;
 use Taro\Libs\Exceptions\FileNotFoundException;
 use Taro\Libs\Exceptions\FileNotSavedException;
 
 class FileHandler
 {
-    public const ROOT = __DIR__ . '..' .DS. '..';
-
     public static $configPath = __DIR__  .DS. '..' .DS. '..' .DS. 'app' .DS. 'bootstrap' .DS. 'config.php';
 
     public static $commandsDir = __DIR__ .DS. '..' .DS. '..' .DS. 'app' .DS. 'console' .DS. 'commands';
@@ -31,4 +30,29 @@ class FileHandler
 
         return file_get_contents($filePath);
     }
+
+    private static function rootPath()
+    {
+        return dirname(\Composer\Factory::getComposerFile());
+    }    
+
+    public static function configPath($rootToFilePath = DS . 'config' . DS .'console.php')
+    {
+        $path = self::rootPath() . $rootToFilePath;
+        if(!realpath($path)) {
+            return null;
+            // $path = self::$configPath;
+        }
+        return $path;
+    }    
+
+    public static function commandsDirectry()
+    {
+        $registeredCommandsDir = Config::get('commands_dir');
+        $path = self::rootPath() . $registeredCommandsDir;
+        if(!realpath($path)) {
+            $path = self::$commandsDir;
+        }
+        return $path;
+    }    
 }
