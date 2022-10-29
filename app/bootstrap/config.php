@@ -7,10 +7,10 @@ class Config
 {
     public static $data = [
         'default'=>[
-            'commandlist_namespace' => \Taro\App\Console\CommandList::class
+            'commandlist_class' => \Taro\App\Console\CommandList::class,
         ],
         'testing'=>[
-            'commandlist_namespace' => \Taro\Tests\Console\CommandList::class
+            'commandlist_class' => \Taro\Tests\Console\CommandList::class
         ],
     ];
 
@@ -52,6 +52,19 @@ class Config
         $keys = explode('.', $key);
 
         return self::find(self::$data[$env], $keys); 
+    }
+
+    /**
+     * @param string $key
+     * @return mixed|null
+     */
+    public static function getLast($key)
+    {
+        $configData = self::get($key); 
+        if(is_array($configData)) {
+            return $configData[array_key_last($configData)];
+        }
+        return $configData;
     }
 
     private static function find($data, $keys = [])

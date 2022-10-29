@@ -21,7 +21,6 @@ class Application
     {
         $this->stream = $stream;
         $this->input = new Input($args);
-        $this->commandRegistry = new CommandRegistry($stream, $this->input);
         self::$instance = $this;
     }
 
@@ -37,6 +36,7 @@ class Application
 
     public function run()
     {
+        $this->commandRegistry = new CommandRegistry($this->stream, $this->input);
         $this->executeCommand();
         $this->terminate();
     }

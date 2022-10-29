@@ -1,6 +1,7 @@
 <?php
 namespace Taro\Libs\Utility;
 
+use ReflectionClass;
 use Taro\App\Bootstrap\Config;
 use Taro\Libs\Exceptions\FileNotFoundException;
 use Taro\Libs\Exceptions\FileNotSavedException;
@@ -46,10 +47,11 @@ class FileHandler
         return $path;
     }    
 
-    public static function commandsDirectry()
+    public static function appCommandsDirectry()
     {
-        $registeredCommandsDir = Config::get('commands_dir');
-        $path = self::rootPath() . $registeredCommandsDir;
+        $commandListClass = Config::getLast('commandlist_class');
+        $reflector = new ReflectionClass($commandListClass);
+        $path = dirname($reflector->getFileName()) . DS . 'commands';
         if(!realpath($path)) {
             $path = self::$commandsDir;
         }

@@ -28,12 +28,12 @@ class MakeCommand extends Command
             'command'=>$command,
         ]);
 
-        $filePath = FileHandler::commandsDirectry() . DS . $commandName . '.php';
+        $filePath = FileHandler::appCommandsDirectry() . DS . $commandName . '.php';
 
         FileHandler::saveAs($filePath, $classData);
 
         $this->textInfo($commandName . ' class created at ' . $filePath);
-        $this->textWarning(Config::get('commandlist_namespace') . '::$commandsに作成したクラス名を追加して下さい。');
+        $this->textWarning(Config::getLast('commandlist_class') . '::$commandsに作成したクラス名を追加して下さい。');
     }
 
     private function makeCommandFromTemplate($template, $vars)

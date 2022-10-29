@@ -16,7 +16,7 @@ class CommandRegistry
 
     private $commandListClass;
 
-    private $commandClassList;
+    private $commandClassList = [];
     
     private $sigParser;
 
@@ -29,10 +29,16 @@ class CommandRegistry
 
     private function loadCommands()
     {
-        /** @var string $commandListClass  */
-        $this->commandListClass = Config::get('commandlist_namespace');
+        /** @var string|array $commandListClass  */
+        $this->commandListClass = Config::get('commandlist_class');
         // $class = Taro\Tests\Console\CommandList::class;
-        $this->commandClassList = $this->commandListClass::$commands;
+        if(is_array($this->commandListClass)) {
+            foreach ($this->commandListClass as $className) {
+                $this->commandClassList = array_merge($this->commandClassList, $className::$commands);
+            }
+        } else {
+            $this->commandClassList = $this->commandListClass::$commands;
+        }
     }
 
     public function register($commandText, Command $callbackCommand)
